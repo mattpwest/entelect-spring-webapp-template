@@ -21,7 +21,7 @@ import za.co.entelect.services.providers.exceptions.TokenExpiredException;
 import za.co.entelect.services.providers.exceptions.TokenNotFoundException;
 import za.co.entelect.web.controllers.web.AbstractBaseController;
 import za.co.entelect.web.forms.ForgotPasswordForm;
-import za.co.entelect.web.forms.ResetPasswordForm;
+import za.co.entelect.services.providers.dto.forms.user.ResetPasswordForm;
 import za.co.entelect.web.security.SecurityHelper;
 import za.co.entelect.web.validators.UserPasswordValidator;
 

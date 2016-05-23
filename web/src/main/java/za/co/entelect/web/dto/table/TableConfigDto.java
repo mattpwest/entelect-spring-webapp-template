@@ -3,9 +3,9 @@ package za.co.entelect.web.dto.table;
 import lombok.Data;
 
 @Data
-public class TableConfig {
+public class TableConfigDto {
 
-    private RowConfig rowConfig;
+    private RowConfigDto rowConfig;
 
     private String entityURL;
 

@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 
 /**
  * Form for administrator to create users.
+ *
+ * Setting the password is handled by sending the user a password reset token by email.
  */
 @Data
 public class UserCreationForm {

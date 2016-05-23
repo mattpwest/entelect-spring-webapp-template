@@ -16,6 +16,7 @@ import za.co.entelect.persistence.user.RoleDao;
 import za.co.entelect.persistence.user.VerificationTokenDao;
 import za.co.entelect.services.providers.AppUserService;
 import za.co.entelect.services.providers.RecaptchaService;
+import za.co.entelect.services.providers.email.TemplateService;
 import za.co.entelect.services.providers.history.HistoryService;
 import za.co.entelect.services.providers.history.HistoryTemplateService;
 import za.co.entelect.services.security.ProjectSecurityService;
@@ -126,5 +127,10 @@ public class TestRootConfig {
     @Bean
     public HistoryTemplateService historyTemplateService() {
         return mock(HistoryTemplateService.class);
+    }
+
+    @Bean
+    public TemplateService templateService() {
+        return mock(TemplateService.class);
     }
 }

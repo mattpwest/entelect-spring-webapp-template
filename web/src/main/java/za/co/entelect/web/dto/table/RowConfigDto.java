@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
-public class RowConfig {
+public class RowConfigDto {
 
-    private Collection<Column> columns =  new ArrayList<>();
+    private Collection<ColumnDto> columns =  new ArrayList<>();
 }

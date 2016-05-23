@@ -1,4 +1,4 @@
-package za.co.entelect.web.forms;
+package za.co.entelect.services.providers.dto.forms.user;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;

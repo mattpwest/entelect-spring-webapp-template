@@ -1,4 +1,4 @@
-package za.co.entelect.web.controllers.web.template;
+package za.co.entelect.web.controllers.web.email;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

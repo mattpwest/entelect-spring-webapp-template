@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
-public class Column {
+public class ColumnDto {
 
     private String header;
 
@@ -14,7 +14,7 @@ public class Column {
 
     private String defaultURL;
 
-    private Collection<Action> actions = new ArrayList<>();
+    private Collection<ActionDto> actions = new ArrayList<>();
 
     public enum ColumnType{
         LOGO,NAME,ACTIONS,LOCATION,CLAN,BAN

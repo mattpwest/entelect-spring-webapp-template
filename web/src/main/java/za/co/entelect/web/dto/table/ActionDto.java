@@ -3,7 +3,7 @@ package za.co.entelect.web.dto.table;
 import lombok.Data;
 
 @Data
-public class Action {
+public class ActionDto {
 
     private ActionType actionType;
 

@@ -15,7 +15,7 @@ import za.co.entelect.domain.entities.user.AppUser;
 import za.co.entelect.services.providers.AppUserService;
 import za.co.entelect.services.security.dto.CustomUser;
 import za.co.entelect.web.controllers.web.AbstractBaseController;
-import za.co.entelect.web.forms.ResetPasswordForm;
+import za.co.entelect.services.providers.dto.forms.user.ResetPasswordForm;
 
 import javax.validation.Valid;
 

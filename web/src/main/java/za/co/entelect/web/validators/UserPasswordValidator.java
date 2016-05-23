@@ -8,11 +8,11 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.context.WebApplicationContext;
 import za.co.entelect.services.providers.dto.forms.user.UserRegistrationForm;
-import za.co.entelect.web.forms.ResetPasswordForm;
+import za.co.entelect.services.providers.dto.forms.user.ResetPasswordForm;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class UserPasswordValidator implements Validator{
+public class UserPasswordValidator implements Validator {
 
     private static final String ERROR_PASSWORD_MISMATCH = "validation.constraints.password.message";
     private static final String ERROR_PASSWORD_REQUIRED = "javax.validation.constraints.NotNull.message";
@@ -26,25 +26,30 @@ public class UserPasswordValidator implements Validator{
     public void validate(Object target, Errors errors) {
         String password, passwordConfirm;
 
-        if(target instanceof UserRegistrationForm){
-            UserRegistrationForm form = (UserRegistrationForm)target;
+        if (target instanceof UserRegistrationForm) {
+            UserRegistrationForm form = (UserRegistrationForm) target;
             password = form.getPassword();
             passwordConfirm = form.getPasswordConfirmation();
-        }
-        else{
-            ResetPasswordForm form = (ResetPasswordForm)target;
+        } else if (target instanceof ResetPasswordForm) {
+            ResetPasswordForm form = (ResetPasswordForm) target;
             password = form.getPassword();
             passwordConfirm = form.getPasswordConfirmation();
+        } else {
+            errors.reject("Form object is not of type UserRegistrationForm or ResetPasswordForm.");
+            return;
         }
-        if(StringUtils.isBlank(password)){
+
+        if (StringUtils.isBlank(password)) {
             errors.rejectValue("password", ERROR_PASSWORD_REQUIRED);
             return;
         }
-        if(StringUtils.isBlank(passwordConfirm)){
+
+        if (StringUtils.isBlank(passwordConfirm)) {
             errors.rejectValue("passwordConfirmation", ERROR_PASSWORD_REQUIRED);
             return;
         }
-        if(!password.equals(passwordConfirm)){
+
+        if (!password.equals(passwordConfirm)) {
             errors.reject(ERROR_PASSWORD_MISMATCH);
             errors.rejectValue("password", ERROR_PASSWORD_MISMATCH);
             errors.rejectValue("passwordConfirmation", ERROR_PASSWORD_MISMATCH);

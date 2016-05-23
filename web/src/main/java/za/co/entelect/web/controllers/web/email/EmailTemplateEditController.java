@@ -1,4 +1,4 @@
-package za.co.entelect.web.controllers.web.template;
+package za.co.entelect.web.controllers.web.email;
 
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import za.co.entelect.domain.entities.email.Template;
-import za.co.entelect.persistence.email.TemplateDao;
+import za.co.entelect.services.providers.email.TemplateService;
 import za.co.entelect.web.controllers.web.AbstractBaseController;
 import za.co.entelect.web.dto.NavLocation;
 import za.co.entelect.web.exceptions.EntityNotFoundException;
@@ -29,57 +29,56 @@ import javax.validation.Valid;
 public class EmailTemplateEditController extends AbstractBaseController {
 
     @Autowired
-    @Setter
-    private TemplateDao templateDao;
+    private TemplateService templateService;
 
     @Autowired
     @Qualifier("emailTemplateEngine")
     private SpringTemplateEngine emailTemplateEngine;
 
+    @ModelAttribute("template")
+    public Template getTemplate(@PathVariable("templateName") String templateName) {
+        Template template = templateService.findByName(templateName);
+
+        if (template == null) {
+            throw new EntityNotFoundException(Template.class.getSimpleName());
+        }
+
+        return template;
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView editTemplate(@ModelAttribute Template template,
-                                     @ModelAttribute TemplateForm templateForm,
-                                     ModelMap model){
+    public ModelAndView editTemplate(@ModelAttribute TemplateForm templateForm,
+                                     ModelMap model) {
         setNav(model, NavLocation.ADMIN);
 
+        Template template = (Template) model.get("template");
         model.put("template", template);
-
         templateForm.setSubject(template.getSubject());
         templateForm.setBody(template.getBody());
+
         return new ModelAndView("/template/admin/edit", model);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ModelAndView editTemplateSubmit(@ModelAttribute("template") Template template,
-                                           @ModelAttribute @Valid TemplateForm templateForm,
+    public ModelAndView editTemplateSubmit(@ModelAttribute @Valid TemplateForm templateForm,
                                            BindingResult binding,
                                            ModelMap model,
                                            RedirectAttributes redirectAttributes) {
 
-        if(binding.hasErrors()){
-            redirectAttributes.addFlashAttribute("message", "Template update Failed.");
-            return new ModelAndView("redirect:/admin/templates/edit/"+template.getName());
-        }
+        Template template = (Template) model.get("template");
 
-        model.clear();
+        if (binding.hasErrors()) {
+            redirectAttributes.addFlashAttribute("error", "Template update failed.");
+            return new ModelAndView("redirect:/admin/templates/edit/" + template.getName());
+        }
 
         template.setSubject(templateForm.getSubject());
         template.setBody(templateForm.getBody());
-        templateDao.save(template);
+        templateService.save(template);
 
         emailTemplateEngine.getCacheManager().clearAllCaches();
 
         redirectAttributes.addFlashAttribute("message", "Template updated.");
-        return new ModelAndView("redirect:/admin/templates", model);
+        return new ModelAndView("redirect:/admin/templates");
     }
-
-    @ModelAttribute("template")
-    public Template getTemplate(@PathVariable("templateName") String templateName) {
-        Template template = templateDao.findByName(templateName);
-        if (template == null) {
-            throw new EntityNotFoundException(Template.class.getSimpleName());
-        }
-        return template;
-    }
-
 }

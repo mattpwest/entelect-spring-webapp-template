@@ -37,8 +37,8 @@
         <sonar.jdbc.password>secret</sonar.jdbc.password>
         <sonar.jacoco.reportPath>target/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPath>
         <sonar.jacoco.itReportPath>target/coverage-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
-        <sonar.test.exclusions>**/*Config.*,**/*Dto.*,**/*Exception.*,**/*Form.*,**/*Initializer.*,**/*TestController.*</sonar.test.exclusions>
-        <sonar.exclusions>**assets/js/lib/**/*.*,**assets/wysiwyg/**/*.*</sonar.exclusions>
+        <sonar.test.exclusions>**/*Config.*,**/dto/**/*.*,**/*Dto.*,**/*DTO.*,**/*Exception.*,**/*Form.*,**/*Initializer.*,**/*TestController.*</sonar.test.exclusions>
+        <sonar.exclusions>**assets/js/lib/**/*.*</sonar.exclusions>
 
         <!-- Code coverage report output locations -->
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
@@ -585,7 +585,9 @@
                 <configuration>
                     <excludes>
                         <exclude>**/*Config.*</exclude>
+                        <exclude>**/dto/**/*.*</exclude>
                         <exclude>**/*Dto.*</exclude>
+                        <exclude>**/*DTO.*</exclude>
                         <exclude>**/*Exception.*</exclude>
                         <exclude>**/*Form.*</exclude>
                         <exclude>**/*Initializer.*</exclude>
