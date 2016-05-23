@@ -20,10 +20,10 @@ import java.util.Map;
  */
 public class RecaptchaResponseFilter implements Filter {
 
-    private static final String RECAPTCHA_RESPONSE_ALIAS = "recaptchaResponse";
-    private static final String RECAPTCHA_RESPONSE_ORIGINAL = "g-recaptcha-response";
+    static final String RECAPTCHA_RESPONSE_ALIAS = "recaptchaResponse";
+    static final String RECAPTCHA_RESPONSE_ORIGINAL = "g-recaptcha-response";
 
-    private static class ModifiedHttpServerRequest extends HttpServletRequestWrapper {
+    static class ModifiedHttpServerRequest extends HttpServletRequestWrapper {
 
         final Map<String, String[]> parameters;
 
