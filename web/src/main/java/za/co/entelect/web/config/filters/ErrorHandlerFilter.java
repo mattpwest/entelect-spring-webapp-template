@@ -1,5 +1,6 @@
 package za.co.entelect.web.config.filters;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import za.co.entelect.config.ConfigProperties;
@@ -13,14 +14,12 @@ import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**
- * Hack to handle view rendering exceptions.
- *
- * Unfortunately we can't pass through error information in development mode, so we'll have to check the stacktrace
- * in our IDEs in future...
+ * Hack to handle view rendering exceptions without showing a stack trace when not running in development mode.
  */
 @Slf4j
 public class ErrorHandlerFilter implements Filter {
 
+    @Setter
     private ConfigProperties config;
 
     @Override
