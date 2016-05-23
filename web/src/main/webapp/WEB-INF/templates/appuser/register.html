@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Register')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body" style="display:flex;" th:unless="${config.registrationEnabled}">
+    <section class="content-wrapper" style="flex: 1;display: flex;justify-content: center;align-items: center;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-info text-center">
+                    <i class="fa fa-warning" style="font-size: 50px"></i>
+                    <h4>Registration is currently offline and will be made available soon.</h4>
+                    <p>Feel free to browse the rest of the site so long.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container main-body" th:if="${config.registrationEnabled}">
+    <section class="content-wrapper">
+        <form th:object="${form}" th:action="@{/register}" method="post"
+              id="userRegistrationForm" action="#" role="form" class="form-horizontal">
+            <h2>Create an account</h2>
+            <hr/>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-3 control-label" th:for="firstName">
+                    First Name
+                </label>
+
+                <div class="col-sm-4">
+                    <input th:field="*{firstName}" th:errorclass="has-error" th:id="firstName"
+                           type="text" class="form-control input"
+                           placeholder="First Name" tabindex="1"
+                           data-validation-engine="validate[required,maxSize[100]]"
+                           maxlength="100"/>
+
+                    <span th:errors="*{firstName}" class="text-danger">Errors...</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-3 control-label" th:for="lastName">
+                    Last Name
+                </label>
+
+                <div class="col-sm-4">
+                    <input th:field="*{lastName}" th:errorclass="has-error" th:id="lastName"
+                           type="text" class="form-control input"
+                           placeholder="Last Name" tabindex="2"
+                           data-validation-engine="validate[required,maxSize[100]]"
+                           maxlength="100"/>
+
+                    <span th:errors="*{lastName}" class="text-danger">Errors...</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-3 control-label" th:for="email">
+                    Email
+                </label>
+
+                <div class="col-sm-4">
+                    <input th:field="*{email}" th:errorclass="has-error" th:id="email"
+                           type="text" class="form-control input"
+                           placeholder="Email Address" tabindex="3"
+                           data-validation-engine="validate[required,custom[email],maxSize[100]]" maxlength="100"/>
+
+                    <span th:errors="*{email}" class="text-danger">Errors...</span>
+                </div>
+            </div>
+            <div id="passwordContainer" class="form-group">
+                <label class="col-sm-offset-1 col-sm-3 control-label" th:for="password">
+                    Password
+                </label>
+
+                <div class="col-sm-4">
+                    <input th:field="*{password}" th:errorclass="has-error" th:id="password"
+                           type="password" class="form-control input"
+                           placeholder="Password" tabindex="4" data-validation-engine="validate[required]"/>
+
+                    <span th:errors="*{password}" class="text-danger">Errors...</span>
+                </div>
+
+                <div id="passwordStrengthContainer" class="col-sm-2" style="display: none;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-3 control-label" th:for="passwordConfirmation">
+                    Confirm Password
+                </label>
+
+                <div class="col-sm-4">
+                    <input th:field="*{passwordConfirmation}" th:errorclass="has-error"
+                           th:id="passwordConfirmation"
+                           type="password" class="form-control input"
+                           placeholder="Password" tabindex="5" data-validation-engine="validate[equals[password]]"/>
+
+                    <span th:errors="*{passwordConfirmation}" class="text-danger">Errors...</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <label><input th:field="*{termsAndConditionsAccepted}" th:errorclass="has-error"
+                           type="checkbox" tabindex="6" data-validation-engine="validate[required]"/>
+                        I agree to the <a href="javascript:void(0)" data-toggle="modal" data-target="#termsAndConditionsModal">Terms and Conditions</a> set out by this site,
+                        including
+                        our Cookie Use.
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <div class="g-recaptcha" th:attr="data-sitekey=${config.recaptchaSiteKey}" data-tabindex="7">
+                    </div>
+
+                    <span th:errors="*{recaptchaResponse}" class="text-danger">Errors...</span>
+                </div>
+            </div>
+
+            <!--<div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+            </div>-->
+
+            <div class="row">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" tabindex="8">Register</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+
+<script th:src="@{/assets/{timestamp}/js/pages/register.js(timestamp=${config.assetsTimestamp})}"></script>
+
+</body>
+</html>

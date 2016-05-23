@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Verify Email')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <form th:action="@{/verification/resend}" action='#' method='POST' th:object="${verificationResendForm}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <h2 class="form-signin-heading">Re-send verification e-mail</h2>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input name="username" id="username" type="text" class="form-control" placeholder="Email address" th:field="*{email}"
+                       data-validation-engine="validate[required,custom[email]]"/>
+            </div>
+
+            <div th:if="${message}" th:text="${message}" class="alert alert-danger">
+                Error resending verification email.
+            </div>
+
+            <button class="btn btn-large btn-primary" type="submit">Send</button>
+        </form>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+</body>
+</html>

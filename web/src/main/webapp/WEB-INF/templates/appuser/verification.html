@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Verify Email')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <h2>Verify your account</h2>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <p>
+                    You have successfully registered and a verification e-mail has been sent to your e-mail address.
+                    Once you click the verification link in the e-mail you will be able to sign in to the site.
+                </p>
+                <p>
+                    If you have not received the verification e-mail within 15 minutes, please check your spam folder.
+                    If it's not there either, try <a href="#" th:href="@{/verification/resend}">re-sending</a> it.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+
+</div>
+</body>
+</html>

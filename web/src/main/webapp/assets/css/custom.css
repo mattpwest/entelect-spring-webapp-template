@@ -1,0 +1,21 @@
+.navbar-brand img {
+    height: 50px;
+    margin-top: -15px;
+}
+
+.footer { /* Sticky footer */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #555;
+    line-height: 50px;
+    color: white;
+}
+
+.table-action {
+    float: left;
+    margin-right: 0.2em;
+}
+
+/* TODO: Put your custom CSS here... */

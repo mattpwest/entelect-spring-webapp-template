@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Administer Users')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>User Administration</h2>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary pull-right"
+                        data-toggle="modal" data-target="#createUser">
+                    Create User
+                </button>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="usersList" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Roles</td>
+                        <td>Actions</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: modal">
+</div>
+
+<div id="createUser" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div th:if="${error}" class="alert alert-danger">
+                        <p th:text="${error}">Something went wrong.</p>
+                    </div>
+
+                    <form th:object="${form}" th:action="@{/admin/users/create}" method="post"
+                          id="userCreationForm" action="#" role="form" class="form-horizontal">
+
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <div class="form-group">
+                            <label class="col-sm-offset-1 col-sm-3 control-label" th:for="${#ids.next('firstName')}">
+                                First Name
+                            </label>
+
+                            <div class="col-sm-4">
+                                <input th:field="*{firstName}" th:errorclass="has-error"
+                                       th:id="${#ids.seq('firstName')}"
+                                       type="text" class="form-control input"
+                                       placeholder="First Name" tabindex="1"/>
+
+                                <span th:errors="*{firstName}" class="text-danger">Errors...</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-offset-1 col-sm-3 control-label" th:for="${#ids.next('lastName')}">
+                                Last Name
+                            </label>
+
+                            <div class="col-sm-4">
+                                <input th:field="*{lastName}" th:errorclass="has-error" th:id="${#ids.seq('lastName')}"
+                                       type="text" class="form-control input"
+                                       placeholder="Last Name" tabindex="2"/>
+
+                                <span th:errors="*{lastName}" class="text-danger">Errors...</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-offset-1 col-sm-3 control-label" th:for="${#ids.next('email')}">
+                                Email
+                            </label>
+
+                            <div class="col-sm-4">
+                                <input th:field="*{email}" th:errorclass="has-error" th:id="${#ids.seq('email')}"
+                                       type="text" class="form-control input"
+                                       placeholder="Email Address" tabindex="3"/>
+
+                                <span th:errors="*{email}" class="text-danger">Errors...</span>
+                            </div>
+                        </div>
+
+                        <!--<div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                            <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+                        </div>-->
+
+                        <div class="row">
+                            <div class="col-sm-offset-4 col-sm-4">
+                                <button type="submit" class="btn btn-primary btn-block btn-lg" tabindex="4">Create
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments :: scripts(useEditor = true)">
+</div>
+
+<script th:src="@{/assets/{timestamp}/js/pages/account.js(timestamp=${config.assetsTimestamp})}"></script>
+
+<script type="text/javascript" th:if="${createUserFailed}">
+    $(window).load(function () {
+        $('#createUser').modal('show');
+    });
+</script>
+
+<script type="text/javascript" th:if="${editUserFailed}">
+    $(window).load(function () {
+        $('#editModal').modal('show');
+    });
+</script>
+
+</body>
+</html>

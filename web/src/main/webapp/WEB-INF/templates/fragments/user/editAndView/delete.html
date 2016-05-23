@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+<script th:fragment="script" th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        $('#confirmDelete').on('click', '.delete', function(event) {
+            event.preventDefault();
+
+            var uri = $(this).data('action');
+            var remove = $(this).data('remove');
+            var modal = $(this).closest('.modal');
+            $.ajax(
+                {
+                    url: uri,
+                    type: 'DELETE',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function () {
+                        console.log('Deleted item.');
+                        var itemContainer = $(remove).parent();
+                        $(remove).remove();
+                        itemContainer.trigger('removed');
+                        modal.modal('hide');
+                    },
+                    error: function (error) {
+                        console.log('Failed to delete item: ', error);
+                    }
+                }
+            );
+        });
+    });
+    /*]]>*/
+</script>
+
+</body>
+</html>

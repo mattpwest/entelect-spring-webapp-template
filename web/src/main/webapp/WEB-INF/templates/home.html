@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Home')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Spring WebApp Template</h3>
+                <p>
+                    This example Spring MVC application includes the following features:
+                </p>
+
+                <ul>
+                    <li>Authentication &amp; Authorization (with custom authorization checks, remember me and sudo)</li>
+                    <li>Environment configuration (switch between in-memory dev profile and MSSQL local or prod profiles)</li>
+                    <li>Email notifications (with in-memory mail server for testing in dev and local profiles and on-line template editing)</li>
+                    <li>Flyway (for managing database upgrade scripts)</li>
+                    <li>History events (simple mechanism for logging user viewable history events)</li>
+                    <li>Layered architecture (shared test &amp; config modules, then domain, persistence, communication, service &amp; web)</li>
+                    <li>Read-only REST API for listing system users</li>
+                    <li>Thymeleaf templates</li>
+                    <li>User management and work flows (registration, verification, password reset, email change, etc)</li>
+                </ul>
+
+                <p>
+                    To play around start with the default the admin user:
+                </p>
+
+                <ul>
+                    <li><strong>Username:</strong> admin@entelect.co.za</li>
+                    <li><strong>Password:</strong> test123</li>
+                </ul>
+            </div>
+        </div>
+
+        <br/>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Access Denied')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <h2>Access Denied</h2>
+
+        <p>You have insufficient permissions to access that functionality.</p>
+
+        <p>If you believe this to be a mistake, please contact a system administrator.</p>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+</body>
+</html>

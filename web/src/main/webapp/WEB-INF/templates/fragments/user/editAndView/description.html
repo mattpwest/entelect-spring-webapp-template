@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+<div th:fragment="block(user)" class="col-sm-12">
+    <div class="box sidebar-box widget-wrapper">
+        <h3>Description</h3>
+
+        <div th:utext="${user.description}"></div>
+    </div>
+</div>
+
+</body>
+</html>

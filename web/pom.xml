@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+        <groupId>za.co.entelect</groupId>
+        <artifactId>entelect-spring-webapp-template</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>web</artifactId>
+	<packaging>war</packaging>
+	<name>web</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>za.co.entelect</groupId>
+			<artifactId>services</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>za.co.entelect</groupId>
+			<artifactId>test</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-webmvc</artifactId>
+        </dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- Logging dependencies -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<dependency> <!-- TODO: Change to provided scope and rather supply from our Tomcat lib folders -->
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+        </dependency>
+
+        <!-- Built-in performance measurement at: http://<host>/<context>/monitoring -->
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+        </dependency>
+	</dependencies>
+
+	<build>
+		<finalName>web</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <id>default-minify</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+
+                        <configuration>
+                            <cssSourceDir>assets/css/</cssSourceDir>
+                            <cssFiles>
+                                <cssFile>bootstrap.min.css</cssFile>
+                                <cssFile>bootstrap-datepicker3.css</cssFile>
+                                <cssFile>validationEngine.jquery.css</cssFile>
+                                <cssFile>font-awesome.min.css</cssFile>
+                                <cssFile>toastr.css</cssFile>
+                                <cssFile>dataTables.bootstrap.min.css</cssFile>
+                                <cssFile>custom.css</cssFile>
+                            </cssFiles>
+                            <cssTargetDir>assets/css</cssTargetDir>
+                            <cssFinalFile>styles.css</cssFinalFile>
+
+                            <jsSourceDir>assets/</jsSourceDir>
+                            <jsFiles>
+                                <jsFile>js/lib/jquery.validationEngine-en.js</jsFile>
+                                <jsFile>js/lib/jquery.validationEngine.js</jsFile>
+                                <jsFile>js/lib/bootstrap.min.js</jsFile>
+                                <jsFile>js/lib/bootstrap-datepicker.js</jsFile>
+                                <jsFile>js/lib/pwstrength-bootstrap-1.2.7.js</jsFile>
+                                <jsFile>js/lib/jquery.dataTables.min.js</jsFile>
+                                <jsFile>js/lib/dataTables.bootstrap.min.js</jsFile>
+                                <jsFile>js/lib/toastr.js</jsFile>
+                                <jsFile>js/datatables-custom.js</jsFile>
+                                <jsFile>js/global.js</jsFile>
+                            </jsFiles>
+                            <jsTargetDir>assets/js</jsTargetDir>
+                            <jsFinalFile>libs.js</jsFinalFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <!-- Override existing WARs -->
+                            <cargo.runtime.args>force=true</cargo.runtime.args>
+                            <!--suppress MavenModelInspection -->
+                            <cargo.hostname>${deploy.hostname}</cargo.hostname>
+                            <!--suppress MavenModelInspection -->
+                            <cargo.servlet.port>${deploy.port}</cargo.servlet.port>
+                            <!--suppress MavenModelInspection -->
+                            <cargo.remote.username>${deploy.username}</cargo.remote.username>
+                            <!--suppress MavenModelInspection -->
+                            <cargo.remote.password>${deploy.password}</cargo.remote.password>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <artifactId>web</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>ROOT</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+</project>

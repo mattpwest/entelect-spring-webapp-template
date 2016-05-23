@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Users')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Users</h2>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="usersPublicList" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>Roles</td>
+                        <td>Actions</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+
+<script th:src="@{/assets/{timestamp}/js/pages/account.js(timestamp=${config.assetsTimestamp})}"></script>
+
+</body>
+</html>

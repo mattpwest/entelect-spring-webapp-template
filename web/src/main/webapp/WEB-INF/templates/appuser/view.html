@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments :: header(title = 'Profile')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<!--@thymesVar id="mode" type=""-->
+<!--@thymesVar id="user" type=""-->
+<div class="container main-body">
+    <section class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2 th:text="|${user.firstName} ${user.lastName}|"> John Doe</h2>
+            </div>
+            <div class="col-sm-8 text-right">
+                <a th:if="${user.id eq currentUser?.id}"
+                   th:href="@{/profile/edit}"
+                   class="btn btn-primary">
+                    <i class="fa fa-sign-out"></i> Edit
+                </a>
+
+                <a th:if="${user.id ne currentUser?.id}"
+                   sec:authorize="hasRole('ADMIN')"
+                   th:href="@{/users/{userId}/edit(userId=${user.id})}"
+                   class="btn btn-primary">
+                    <i class="fa fa-sign-out"></i> Edit
+                </a>
+
+                <a sec:authorize="hasRole('PREVIOUS_ADMINISTRATOR')"
+                   th:href="@{/logout/impersonate}"
+                   class="btn btn-warning">
+                    <i class="fa fa-sign-out"></i> As Admin
+                </a>
+
+                <a sec:authorize="hasRole('ADMIN')"
+                     th:href="@{/login/impersonate(username=${user?.email})}"
+                     class="btn btn-warning">
+
+                    <i class="fa fa-sign-in"></i> As User
+                </a>
+            </div>
+        </div>
+
+        <div class="row equalize">
+            <div class="col-sm-12">
+                <div class="box sidebar-box widget-wrapper">
+                    <h3>Log</h3>
+
+                    <div th:replace="fragments/history :: block(${history})">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<script th:replace="fragments/user/editAndView/profileBanner :: script">
+</script>
+
+<script th:replace="fragments/user/editAndView/profileBanner :: adminScript">
+</script>
+
+<div th:replace="fragments :: scripts(useEditor = true)">
+</div>
+
+</body>
+</html>

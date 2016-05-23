@@ -1,0 +1,317 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+<div th:fragment="block(mode, user)" th:with="edit=#{'edit'},view=#{'view'}">
+    <div th:switch="${mode}">
+        <div th:case="${view}">
+            <div class="tournament">
+                <h4 th:if="${user.id eq currentUser?.id}">
+                    Public <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top"
+                              title="Information under this heading will be displayed on your public profile."></i>
+                </h4>
+                <div class="form-horizontal">
+                    <div class="clearfix">
+                        <label class="col-sm-12">
+                            <i class="fa fa-question" th:if="${user.gender == null}"/>
+                            <i class="fa" th:if="${user.gender != null}"
+                               th:classAppend="${user.gender == T(za.co.dgl.domain.entities.user.AppUser.Gender).MALE} ? 'fa-male' : 'fa-female'"/>
+
+                            <span th:if="${user.age == null}">Unknown age</span>
+                            <span th:if="${user.age != null}" th:text="|${user.age} years old|">23 years old</span>
+                        </label>
+                    </div>
+
+                    <div th:if="${user.industry != null}" class="clearfix">
+                        <label class="col-sm-4">Industry:</label>
+                        <div class="col-sm-8 no-padding-left">
+                            <span th:text="${user.industry}">Space</span>
+                        </div>
+                    </div>
+
+                    <div th:if="${user.occupation != null}" class="clearfix">
+                        <label class="col-sm-4">Occupation:</label>
+                        <div class="col-sm-8 no-padding-left">
+                            <span th:text="${user.occupation}">Space Engineer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 th:if="${user.id eq currentUser?.id}">
+                    Private <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top"
+                               title="Information under this heading will not be displayed on your public profile."></i>
+                </h4>
+
+                <div th:if="${user.id eq currentUser?.id}" class="form-horizontal">
+                    <div class="clearfix">
+                        <label class="col-sm-4">Email:</label>
+                        <div class="col-sm-8 no-padding-left">
+                            <span th:text="${user.email}">someone@example.com</span>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"
+                         th:if="${user.identificationType != T(za.co.dgl.domain.entities.user.AppUser.IdentificationType).PASSPORT}">
+                        <label class="col-sm-4">ID Number:</label>
+                        <div class="col-sm-8 no-padding-left">
+                        <span th:text="${user.identificationNumber}">99123112346567</span>
+                        </div>
+                    </div>
+                    <div class="clearfix"
+                         th:if="${user.identificationType == T(za.co.dgl.domain.entities.user.AppUser.IdentificationType).PASSPORT}">
+                        <label class="col-sm-4">Passport Number:</label>
+                        <div class="col-sm-8 no-padding-left">
+                            <span th:text="${user.passportNumber}">99123112346567</span>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <label class="col-sm-4">Mobile Number:</label>
+                        <div class="col-sm-8 no-padding-left">
+                        <span th:text="${user.mobileNumber}">123 456 7777</span>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <label class="col-sm-4">Landline Number:</label>
+                        <div class="col-sm-8 no-padding-left">
+                        <span th:text="${user.landLineNumber}">123 456 7777</span>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <label class="col-sm-4">Twitter Handle:</label>
+                        <div class="col-sm-8 no-padding-left">
+                        <span th:text="|@${user.twitterHandle}|">@Bozo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:case="${edit}" th:object="${profileForm}">
+            <div class="tournament">
+                <h4 th:if="${user.id eq currentUser?.id}">
+                    Public <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top"
+                              title="Information under this heading will be displayed on your public profile."></i>
+                </h4>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('${profileForm.gender}')} ? 'has-error'">
+                    <label for="gender">Gender: </label>
+
+                    <select th:field="*{gender}" id="gender" name="gender"
+                            class="chosen-select dropdown-chosen" tabindex="6" form="profileForm"
+                            th:errorclass="has-error">
+                        <option th:selected="${user.gender == null}" value="">Unknown</option>
+                        <option th:each="gender : ${genders}" th:value="${gender.name()}" th:text="${gender}"
+                                th:selected="${user.gender eq gender}">
+                            Female
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('${profileForm.dateOfBirth}')} ? 'has-error'">
+                    <label for="dateOfBirth">Date of birth: </label>
+
+                    <input th:field="*{dateOfBirth}" type="text"
+                           class="form-control datepicker input" id="dateOfBirth" name="dateOfBirth"
+                           placeholder="dd/mm/yyyy"
+                           data-date-format="dd/mm/yyyy" data-startView="decade"
+                           tabindex="7" form="profileForm"
+                           data-validation-engine="validate[custom[date],past[now]]"/>
+
+                    <span th:errors="*{dateOfBirth}" class="text-danger">Errors...</span>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('${profileForm.occupation}')} ? 'has-error'">
+                    <label for="occupation">Occupation: </label>
+
+                    <input th:field="*{occupation}" id="occupation" name="occupation"
+                           class="form-control" placeholder="Occupation" tabindex="8"
+                           form="profileForm"
+                           data-validation-engine="validate[maxSize[150]]"/>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('${profileForm.industry}')} ? 'has-error'">
+                    <label for="industry">Industry: </label>
+
+                    <input th:field="*{industry}" id="industry" name="industry"
+                           class="form-control" placeholder="Industry" tabindex="9"
+                           form="profileForm"
+                           data-validation-engine="validate[maxSize[150]]"/>
+                </div>
+
+                <h4>
+                    Private <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top"
+                               title="Information under this heading will not be displayed on your public profile."></i>
+                </h4>
+
+                <div id="email-input-block" class="form-group">
+                    <label for="email">Email: </label>
+
+                    <input th:disabled="true" th:value="${user.email}" name="email" id="email" class="form-control" th:style="${user.changeEmailEnabled} ? 'width:calc(100% - 50px)' : ''"/>
+                    <div th:if="${user.changeEmailEnabled}" class="settings-cog">
+                        <div class="dropdown">
+                            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="fa fa-cog"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li ><a href="javascript:void(0)" data-toggle="modal" data-target="#changeEmailModal">Change email address</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="radio" class="identification-option" th:field="*{identificationType}"
+                               value="ID" form="profileForm"/>
+                        ID Number
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" class="identification-option" th:field="*{identificationType}"
+                               value="PASSPORT" form="profileForm"/>
+                        Passport Number
+                    </label>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('${profileForm.identificationNumber}')} ? 'has-error'">
+                    <label for="identificationNumber">ID Number: </label>
+
+                    <input id="identificationNumber" th:field="*{identificationNumber}" class="form-control" tabindex="10"
+                           data-validation-engine="validate[maxSize[13],custom[idNumber]" form="profileForm"/>
+                </div>
+                <div class="form-group" style="display:none;"
+                     th:classappend="${#fields.hasErrors('${profileForm.identificationNumber}')} ? 'has-error'">
+                    <label for="passportNumber">Passport Number: </label>
+
+                    <input id="passportNumber" th:field="*{passportNumber}" class="form-control" tabindex="10" form="profileForm"/>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('${profileForm.mobileNumber}')} ? 'has-error'">
+                    <label for="mobileNumber">Mobile Number: </label>
+
+                    <input th:field="*{mobileNumber}" id="mobileNumber" name="mobileNumber"
+                           class="form-control" tabindex="11"
+                           form="profileForm"
+                           data-validation-engine="validate[custom[integer],maxSize[15]]"/>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('${profileForm.landLineNumber}')} ? 'has-error'">
+                    <label for="landLineNumber">Landline Number: </label>
+
+                    <input th:field="*{landLineNumber}" id="landLineNumber" name="landLineNumber"
+                           class="form-control" tabindex="12"
+                           form="profileForm"
+                           data-validation-engine="validate[custom[integer],maxSize[15]]"/>
+                </div>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('${profileForm.twitterHandle}')} ? 'has-error'">
+                    <label for="twitterHandle">Twitter Handle: </label>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">@</div>
+
+                        <input th:field="*{twitterHandle}" id="twitterHandle" name="twitterHandle"
+                               class="form-control" placeholder="Twitter Handle" tabindex="13"
+                               form="profileForm"
+                               data-validation-engine="validate[maxSize[15]]"/>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    if ($('.identification-option:checked').val() === 'PASSPORT') {
+                        $('#identificationNumber').parent().hide();
+                        $('#passportNumber').parent().show();
+                    }
+                    $('body').on('change', '.identification-option', function(){
+                        if($(this).val() === 'ID') {
+                            $('#identificationNumber').parent().show();
+                            $('#passportNumber').parent().hide();
+                        }
+                        else {
+                            $('#identificationNumber').parent().hide();
+                            $('#passportNumber').parent().show();
+                        }
+                    });
+                });
+            </script>
+            <div th:replace="fragments/user/editAndView/accountDetails :: changeEmailModals">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="changeEmailModals">
+    <div th:if="${user.changeEmailEnabled}" class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="changeEmailModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="changeEmailModalLabel">Change Email Address</h4>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/changeEmail}" th:method="POST" id="changeEmailAddressForm" class="form-horizontal" novalidate="novalidate">
+
+                        <div class="form-group">
+                            <label for="changeEmail" class="col-sm-4 control-label">New Email Address</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" id="changeEmail" name="changeEmail" placeholder="Email"
+                                       data-validation-engine="validate[required,custom[email],maxSize[100]]" maxlength="100"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="changeEmailConfirm" class="col-sm-4 control-label">Confirm</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" id="changeEmailConfirm" name="changeEmailConfirm" placeholder="Confirm New Email"
+                                       data-validation-engine="validate[required,equals[changeEmail]]" maxlength="100"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-link" data-dismiss="modal" form="changeEmailAddressForm">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="changeEmailAddressForm">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<li><a href="javascript:void(0)" data-toggle="modal" data-target="#changeEmailPreferencesModal">Change email preferences</a></li>
+<div class="modal fade" id="changeEmailPreferencesModal" tabindex="-1" role="dialog" aria-labelledby="changeEmailPreferencesModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="changeEmailPreferencesModalLabel">Change Email Address</h4>
+            </div>
+            <div class="modal-body">
+                <form id="changeEmailPreferencesForm" class="form-horizontal" novalidate="novalidate">
+                    <div class="form-group" th:each="preference : ${mailPreferences}">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" th:name="${{preference}}"/>
+                                <span th:text="${preference.displayName}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-link" data-dismiss="modal" form="changeEmailPreferencesForm">Cancel</button>
+                <button type="submit" class="btn btn-primary" form="changeEmailPreferencesForm">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

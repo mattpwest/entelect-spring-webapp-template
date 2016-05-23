@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+<div th:fragment="block(history)" class="historyList">
+    <article th:each="historyEntry : ${history}">
+        <div class="clearfix">
+            <p th:utext="${historyEntry.message}">
+                <a>rishal</a> will play <a>DOTA 2</a> with team <a>BigGuns</a> against team<a>IceMen</a>
+            </p>
+
+            <p class="pull-right">
+                <span th:text="${#temporals.format(historyEntry.timestamp, 'dd MMMM yyyy')}">
+                    16 January 2015
+                </span> at <span th:text="${#temporals.format(historyEntry.timestamp, 'HH:mm:ss')}">
+                    12:35:06
+                </span>
+            </p>
+        </div>
+    </article>
+    <article th:if="${history.totalElements} eq 0">
+        <div class="news-body">
+            None
+        </div>
+    </article>
+
+    <div class="history-controls clearfix"
+         th:with="previous=${history.previousPageable()},next=${history.nextPageable()}">
+
+        <a class="pull-left"
+           th:if="${previous ne null}"
+           th:attr="data-link=@{${historyUri}(page=${previous?.pageNumber})}">
+            Newer
+        </a>
+
+        <a class="pull-right"
+           th:if="${next ne null}"
+           th:attr="data-link=@{${historyUri}(page=${next?.pageNumber})}">
+            Older
+        </a>
+    </div>
+
+    <script th:inline="javascript">
+        $('.historyList').off('click');
+        $('.historyList').on('click', 'a', function() {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+
+            var targetUri = $(this).data('link');
+            $.ajax({
+                url: targetUri,
+                type: 'get',
+                dataType: 'html',
+                success: function(data) {
+                    var itemContainer = $('.historyList');
+                    var items = $(data).html();
+                    itemContainer.html(items);
+                }
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>

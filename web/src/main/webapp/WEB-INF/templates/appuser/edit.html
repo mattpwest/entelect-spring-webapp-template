@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments :: header(title = 'Profile')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<!--@thymesVar id="mode" type=""-->
+<!--@thymesVar id="user" type=""-->
+<div class="container main-body">
+    <section class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Edit Profile</h3>
+
+                <form id="profileForm"
+                      th:action="@{/profile/save}"
+                      th:object="${profileForm}"
+                      method="post">
+
+                    <div class="form-group">
+                        <label class="col-sm-offset-2 col-sm-2 control-label" th:for="*{firstName}">
+                            Name
+                        </label>
+
+                        <input th:field="*{firstName}"
+                               th:classappend="${#fields.hasErrors('${profileForm.firstName}')} ? 'has-error'"
+                               type="text"
+                               tabindex="1"
+                               data-prompt-position="bottomRight"
+                               data-validation-engine="validate[required,maxSize[100]]"/>
+
+                        <div th:errors="*{firstName}" class="alert alert-danger profile-header-error">
+                            Errors...
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-offset-2 col-sm-2 control-label" th:for="*{lastName}">
+                            Surname
+                        </label>
+
+                        <input th:field="*{lastName}"
+                               th:classappend="${#fields.hasErrors('${profileForm.lastName}')} ? 'has-error'"
+                               type="text"
+                               tabindex="2"
+                               data-prompt-position="bottomRight"
+                               data-validation-engine="validate[required,maxSize[100]]"/>
+
+                        <div th:errors="*{lastName}" class="alert alert-danger profile-header-error">
+                            Errors...
+                        </div>
+                    </div>
+
+
+                    <a th:if="${user.id eq currentUser?.id}"
+                       th:href="@{/profile}"
+                       class="btn btn-link pull-left">
+                        Cancel
+                    </a>
+
+                    <a th:if="${user.id eq currentUser?.id}"
+                       id="editSave"
+                       href="javascript:submitProfileForm()"
+                       class="btn btn-primary pull-right">
+                        <i class="fa fa-pencil"></i> Save
+                    </a>
+
+                    <a th:if="${user.id != currentUser?.id}"
+                       sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/admin/users}"
+                       class="btn btn-link pull-left">
+                        Cancel
+                    </a>
+
+                    <a th:if="${user.id != currentUser?.id}"
+                       sec:authorize="hasRole('ADMIN')"
+                       id="adminSave"
+                       href="javascript:submitAdminProfileForm(); void(0);"
+                       class="btn btn-success pull-right">
+                        Save
+                    </a>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<script th:replace="fragments/user/editAndView/profileBanner :: script">
+</script>
+
+<script th:replace="fragments/user/editAndView/profileBanner :: adminScript">
+</script>s
+
+<div th:replace="fragments :: scripts(useEditor = true)">
+</div>
+
+</body>
+</html>

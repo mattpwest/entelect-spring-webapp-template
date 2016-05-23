@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:height="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments :: header(title = 'Edit Message Template')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <div th:replace="fragments :: messages"></div>
+        <h2>Edit Template</h2>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box widget-wrapper">
+                    <form th:object="${templateForm}"
+                          th:action="@{/admin/templates/edit/{templateName}(templateName=${template.name})}"
+                          method="post"
+                          class="form-horizontal">
+
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" th:for="#{'name'}">
+                                Name
+                            </label>
+                            <div class="col-sm-4">
+                                <p th:text="${template.name}" tabindex="1" class="form-control" >
+                                    Template Name
+                                </p>
+                                <span th:errors="${template.name}" class="help-block text-danger">Errors...</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" th:for="#{'subject'}">
+                                Subject
+                            </label>
+
+                            <div class="col-sm-4">
+                                <input th:field="*{subject}" th:errorclass="has-error" th:id="#{'subject'}"
+                                       type="text" class="form-control input"
+                                       placeholder="Subject" tabindex="2"/>
+
+                                <span th:errors="*{subject}" class="help-block text-danger">Errors...</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" th:for="#{'body'}">
+                                Body
+                            </label>
+
+                            <div class="col-sm-8">
+                                <textarea th:field="*{body}" cols="120" rows="20">
+                                </textarea>
+
+                                <span th:errors="*{body}" class="help-block text-danger">Errors...</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-large btn-primary pull-right" type="submit">Submit</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts(useEditor = true)">
+</div>
+
+</body>
+</html>

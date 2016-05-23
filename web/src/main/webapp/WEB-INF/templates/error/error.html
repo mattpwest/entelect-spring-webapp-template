@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Error')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+        <h2>Error occurred</h2>
+
+        <p>It seems an error has occurred.</p>
+
+        <p>Please contact a system administrator if the error persists.</p>
+
+        <div th:if="${config.devOn}">
+            <p th:text="${exceptionName}"></p>
+            <p th:text="${exception}"></p>
+            <p th:text="${stackTrace}"></p>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+</body>
+</html>

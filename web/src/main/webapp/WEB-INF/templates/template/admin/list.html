@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'List Message Templates')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<div class="container main-body">
+    <section class="content-wrapper">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Template Administration</h2>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-sm-12">
+            <table id="templatesList" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>Subject</td>
+                    <td>Action</td>
+                </tr>
+                </tbody>
+            </table>
+                </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+
+<script th:src="@{/assets/{timestamp}/js/pages/template.js(timestamp=${config.assetsTimestamp})}"></script>
+
+</body>
+</html>

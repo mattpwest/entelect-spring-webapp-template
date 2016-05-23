@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: header(title = 'Dashboard')">
+</head>
+
+<body>
+<header th:replace="fragments :: navbar">
+</header>
+
+<!--@thymesVar id="mode" type=""-->
+<!--@thymesVar id="user" type=""-->
+<div class="container main-body"
+    th:with="mode='view'">
+    <section class="content-wrapper">
+        <div th:replace="fragments :: messages">
+        </div>
+
+        <div class="row">
+            <div th:replace="fragments/user/editAndView/profileBanner :: block('dashboard',${user})">
+            </div>
+        </div>
+
+        <div class="row equalize">
+            <div class="col-sm-4">
+                <div class="box sidebar-box widget-wrapper">
+                    <div class="profile-badge-block">
+                        <h3>Clans</h3>
+
+                        <div th:replace="fragments/user/editAndView/clans :: block('view',${user})"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="box sidebar-box widget-wrapper">
+                    <div class="profile-badge-block">
+                        <h3>Teams</h3>
+
+                        <div th:replace="fragments/user/editAndView/teams :: block('view',${user})">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="box sidebar-box widget-wrapper">
+                    <div class="profile-badge-block">
+                        <h3>Games</h3>
+
+                        <div th:replace="fragments/user/editAndView/games :: block('view',${user})">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" th:if="${warnings?.getTotalPages()>0}">
+            <div class="col-sm-12">
+                <div class="box sidebar-box widget-wrapper">
+                    <h3>Warnings</h3>
+
+                    <div th:replace="fragments/warnings :: block(${warnings})">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row equalize">
+            <div class="col-sm-6">
+                <div class="box sidebar-box widget-wrapper">
+                    <h3>Your Leagues</h3>
+
+                    <p th:if="${leagues?.size() == 0}">
+                        None
+                    </p>
+
+                    <div th:each="league : ${leagues}" th:remove="tag">
+                        <div th:replace="fragments/user/editAndView/leagueSummary :: block(${league})">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="box sidebar-box widget-wrapper">
+                    <h3>Your Cups</h3>
+
+                    <p th:if="${cups == null}">
+                        None
+                    </p>
+
+                    <div th:each="cup : ${cups}" th:remove="tag">
+                        <div th:replace="fragments/tournament/summary :: summary(${cup})">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row equalize">
+            <div class="col-sm-6">
+                <div th:replace="match/matchSummaryBlocks :: adminNeeded(${attentionMatches},${attentionMatchesUri})">
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div th:replace="match/matchSummaryBlocks :: upcoming(${upcomingMatches},${upcomingMatchesUri})">
+                </div>
+            </div>
+        </div>
+
+        <div class="row equalize">
+            <div class="col-sm-6">
+                <div th:replace="match/matchSummaryBlocks :: recent(${recentMatches},${recentMatchesUri})">
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="box sidebar-box widget-wrapper">
+                    <div>
+                        <h3>Log</h3>
+
+                        <div th:replace="fragments/history :: block(${history})">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:remove="tag" th:if="${!leagues.empty}">
+    <div th:replace="league/preferencesModal :: modal">
+    </div>
+</div>
+
+<div th:replace="fragments :: footer">
+</div>
+
+<div th:replace="fragments :: scripts">
+</div>
+
+<div th:remove="tag" th:if="${leagues?.size() > 0}">
+    <script th:replace="fragments/user/editAndView/leagueSummary :: scripts">
+    </script>
+</div>
+
+</body>
+</html>
