@@ -1,14 +1,11 @@
-package za.co.entelect.web.converters;
+package za.co.entelect.web.security;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import za.co.entelect.UnitTest;
 import za.co.entelect.services.security.exceptions.AccountDisabledException;
 import za.co.entelect.services.security.exceptions.EmailNotVerifiedException;
-import za.co.entelect.web.security.LoginFailureHandler;
 
-import javax.servlet.FilterChain;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
